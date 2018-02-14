@@ -376,7 +376,6 @@ class AdherentAdmin extends AbstractAdmin
                     return true;
                 },
             ])
-
             ->add('tags', CallbackFilter::class, [
                 'label' => 'Tags',
                 'callback' => function (ProxyQuery $qb, string $alias, string $field, array $value) {
@@ -387,6 +386,20 @@ class AdherentAdmin extends AbstractAdmin
                     $value = array_map('trim', explode(',', strtolower($value['value'])));
                     $qb->leftJoin(sprintf('%s.tags', $alias), 't');
                     $qb->andWhere($qb->expr()->in('LOWER(t.name)', $value));
+
+                    return true;
+                },
+            ])
+            ->add('referentTags', CallbackFilter::class, [
+                'label' => 'Tags référent',
+                'callback' => function (ProxyQuery $qb, string $alias, string $field, array $value) {
+                    if (!$value['value']) {
+                        return false;
+                    }
+
+                    $value = array_map('trim', explode(',', strtolower($value['value'])));
+                    $qb->leftJoin("$alias.referentTags", 'referent_tag');
+                    $qb->andWhere($qb->expr()->in('LOWER(referent_tag.name)', $value));
 
                     return true;
                 },
@@ -446,6 +459,9 @@ class AdherentAdmin extends AbstractAdmin
             ])
             ->add('tags', null, [
                 'label' => 'Tags',
+            ])
+            ->add('referentTags', null, [
+                'label' => 'Tags référent',
             ])
             ->add('_action', null, [
                 'virtual_field' => true,
