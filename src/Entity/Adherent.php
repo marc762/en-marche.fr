@@ -147,9 +147,9 @@ class Adherent implements UserInterface, GeoPointInterface, EncoderAwareInterfac
     private $legislativeCandidate;
 
     /**
-     * @ORM\Embedded(class="ManagedArea", columnPrefix="managed_area_")
+     * @var ReferentManagedArea|null
      *
-     * @var ManagedArea
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\ReferentManagedArea", cascade={"all"}, orphanRemoval=true)
      */
     private $managedArea;
 
@@ -712,12 +712,12 @@ class Adherent implements UserInterface, GeoPointInterface, EncoderAwareInterfac
         $this->localHostEmailsSubscription = $localHostEmailsSubscription;
     }
 
-    public function getManagedArea(): ?ManagedArea
+    public function getManagedArea(): ?ReferentManagedArea
     {
         return $this->managedArea;
     }
 
-    public function setManagedArea(ManagedArea $managedArea): void
+    public function setManagedArea(ReferentManagedArea $managedArea): void
     {
         $this->managedArea = $managedArea;
     }
@@ -764,22 +764,15 @@ class Adherent implements UserInterface, GeoPointInterface, EncoderAwareInterfac
         $this->boardMember = null;
     }
 
-    public function setReferent(array $codes, string $markerLatitude, string $markerLongitude): void
+    public function setReferent(array $tags, string $markerLatitude, string $markerLongitude): void
     {
-        $this->managedArea = new ManagedArea();
-        $this->managedArea->setCodes($codes);
-        $this->managedArea->setMarkerLatitude($markerLatitude);
-        $this->managedArea->setMarkerLongitude($markerLongitude);
+        $this->managedArea = new ReferentManagedArea($tags, $markerLatitude, $markerLongitude);
     }
 
     public function isReferent(): bool
     {
-        return $this->managedArea instanceof ManagedArea && !empty($this->managedArea->getCodes());
-    }
-
-    public function getManagedAreaCodesAsString(): ?string
-    {
-        return $this->managedArea->getCodesAsString();
+        return $this->managedArea instanceof ReferentManagedArea
+            && !$this->managedArea->getTags()->isEmpty();
     }
 
     public function getManagedAreaMarkerLatitude(): ?string
