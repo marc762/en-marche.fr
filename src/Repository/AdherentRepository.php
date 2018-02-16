@@ -207,9 +207,9 @@ class AdherentRepository extends EntityRepository implements UserLoaderInterface
     {
         return $this
             ->createQueryBuilder('a')
-            ->where('a.managedArea.codes IS NOT NULL')
-            ->andWhere('LENGTH(a.managedArea.codes) > 0')
-            ->orderBy('LOWER(a.managedArea.codes)', 'ASC')
+            ->innerJoin('a.managedArea', 'managed_area')
+            ->innerJoin('managed_area.tags', 'managed_area_tag')
+            ->orderBy('LOWER(managed_area_tag.name)', 'ASC')
         ;
     }
 
@@ -217,7 +217,7 @@ class AdherentRepository extends EntityRepository implements UserLoaderInterface
     {
         $qb = $this
             ->createReferentQueryBuilder()
-            ->andWhere('FIND_IN_SET(:code, a.managedArea.codes) > 0')
+            ->andWhere('managed_area_tag.name = :code')
             ->setParameter('code', ManagedAreaUtils::getCodeFromCommittee($committee))
         ;
 
@@ -255,7 +255,7 @@ class AdherentRepository extends EntityRepository implements UserLoaderInterface
      */
     public function findAllManagedBy(Adherent $referent): array
     {
-        if (!$referent->getManagedArea()) {
+        if (!$referent->isReferent()) {
             return [];
         }
 
@@ -269,7 +269,9 @@ class AdherentRepository extends EntityRepository implements UserLoaderInterface
 
         $codesFilter = $qb->expr()->orX();
 
-        foreach ($referent->getManagedArea()->getCodes() as $key => $code) {
+        foreach ($referent->getManagedArea()->getTags() as $key => $tag) {
+            $code = $tag->getName();
+
             if (is_numeric($code)) {
                 // Postal code prefix
                 $codesFilter->add(
