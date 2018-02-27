@@ -764,7 +764,7 @@ class Adherent implements UserInterface, GeoPointInterface, EncoderAwareInterfac
         $this->boardMember = null;
     }
 
-    public function setReferent(array $tags, string $markerLatitude, string $markerLongitude): void
+    public function setReferent(array $tags, string $markerLatitude = null, string $markerLongitude = null): void
     {
         $this->managedArea = new ReferentManagedArea($tags, $markerLatitude, $markerLongitude);
     }

@@ -88,6 +88,7 @@
         <service id="AppBundle\Procuration\ProcurationSession" />
 
         <!-- Referent -->
+        <service id="AppBundle\Command\ReferentTagImportCommand"/>
         <service id="AppBundle\Referent\ReferentTagManager" />
 
         <!-- Report -->
