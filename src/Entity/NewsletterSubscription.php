@@ -54,8 +54,19 @@ class NewsletterSubscription
      *     minMessage="neswletter.postalCode.invalid",
      *     maxMessage="neswletter.postalCode.invalid"
      * )
+     * @Assert\NotBlank(message="common.postal_code.not_blank")
+     * @Assert\Length(max=255, maxMessage="common.postal_code.max_length")
      */
     private $postalCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\NotBlank(message="common.country.not_blank")
+     * @Assert\Length(max=255, maxMessage="common.country.max_length")
+     */
+    private $country;
 
     public function __toString()
     {
@@ -72,7 +83,7 @@ class NewsletterSubscription
         return $this->email;
     }
 
-    public function setEmail(string $email = null)
+    public function setEmail(string $email = null): void
     {
         $this->email = $email;
     }
@@ -82,7 +93,7 @@ class NewsletterSubscription
         return $this->postalCode;
     }
 
-    public function setPostalCode(string $postalCode = null)
+    public function setPostalCode(string $postalCode = null): void
     {
         $this->postalCode = $postalCode;
     }
@@ -90,5 +101,15 @@ class NewsletterSubscription
     public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country = null): void
+    {
+        $this->country = $country;
     }
 }

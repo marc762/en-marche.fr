@@ -1,0 +1,26 @@
+{%- block app_newsletter_subscription_widget -%}
+    {{ form_widget(form.email, {
+        'attr': {
+            'aria-label': 'Entrez votre adresse email',
+            'title': 'common.email_address',
+            'placeholder': 'common.email_address',
+            'class': 'form__email'
+        }
+    }) }}
+    {{ form_widget(form.postalCode, {
+        'attr': {
+            'aria-label': 'Entrez votre code postal',
+            'title': 'common.zip_code',
+            'placeholder': 'common.zip_code',
+            'class': 'form__zipcode'
+        }
+    }) }}
+    {{ form_widget(form.country, {
+        'attr': {
+            'aria-label': 'Entrez votre pays',
+            'title': 'common.country',
+            'placeholder': 'common.country',
+            'class': 'form__country'
+        }
+    }) }}
+{%- endblock -%}
