@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\NewsletterSubscription;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,7 +25,8 @@ class NewsletterSubscriptionType extends AbstractType
                 'required' => false,
                 'filter_emojis' => true,
             ])
-            ->add('country', TextType::class, [
+            ->add('country', CountryType::class, [
+                'placeholder' => 'Choisissez un pays',
                 'required' => false,
             ])
         ;

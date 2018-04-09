@@ -7,9 +7,9 @@ Feature: Be able to subscribe to newsletter in multiple pages
     Given I am on "/"
     And I should see "Recevez la newsletter du mouvement"
     When I fill in the following:
-      | Adresse email | user-news@newsletter.fr |
-      | Code postal   | 75001                   |
-      | Pays          | France                  |
+      | Adresse email      | user-news@newsletter.fr |
+      | Code postal        | 75001                   |
+    And I select "FR" from "app_newsletter_subscription_country"
     And I press "Je m'inscris"
     Then I should be on "/newsletter/merci"
     And I should see "Vous êtes désormais inscrit à notre newsletter !"
@@ -20,9 +20,9 @@ Feature: Be able to subscribe to newsletter in multiple pages
     And I am on "/articles/actualites/outre-mer"
     And I should see "Recevez la newsletter"
     When I fill in the following:
-      | Adresse email | user-news@newsletter.fr |
-      | Code postal   | 75001                   |
-      | Pays          | France                  |
+      | Adresse email      | user-news@newsletter.fr |
+      | Code postal        | 75001                   |
+    And I select "FR" from "app_newsletter_subscription_country"
     And I press "Je m'inscris"
     Then I should be on "/newsletter/merci"
     And I should see "Vous êtes désormais inscrit à notre newsletter !"
@@ -33,7 +33,7 @@ Feature: Be able to subscribe to newsletter in multiple pages
     When I fill in the following:
       | Votre adresse e-mail | user-news@newsletter.fr |
       | Votre code postal    | 75001                   |
-      | Votre Pays           | France                  |
+    And I select "FR" from "app_newsletter_subscription_country"
     And I press "Je m'inscris"
     Then I should be on "/newsletter/merci"
     And I should see "Vous êtes désormais inscrit à notre newsletter !"
@@ -49,7 +49,7 @@ Feature: Be able to subscribe to newsletter in multiple pages
     When I fill in the following:
       | Votre adresse e-mail | user-news |
       | Votre code postal    | 75001     |
-      | Votre Pays           | France    |
+    And I select "FR" from "app_newsletter_subscription_country"
     And I press "Je m'inscris"
     Then I should be on "/newsletter"
     And I should see "Ceci n'est pas une adresse e-mail valide."
