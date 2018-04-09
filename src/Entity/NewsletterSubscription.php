@@ -62,9 +62,8 @@ class NewsletterSubscription
     /**
      * @var string
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", length=2, nullable=true)
      * @Assert\NotBlank(message="common.country.not_blank")
-     * @Assert\Length(max=255, maxMessage="common.country.max_length")
      */
     private $country;
 
