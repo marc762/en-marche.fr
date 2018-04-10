@@ -82,7 +82,7 @@ class NewsletterSubscription
         return $this->email;
     }
 
-    public function setEmail(string $email = null): void
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
@@ -92,7 +92,7 @@ class NewsletterSubscription
         return $this->postalCode;
     }
 
-    public function setPostalCode(string $postalCode = null): void
+    public function setPostalCode(?string $postalCode): void
     {
         $this->postalCode = $postalCode;
     }
@@ -107,7 +107,7 @@ class NewsletterSubscription
         return $this->country;
     }
 
-    public function setCountry(string $country = null): void
+    public function setCountry(?string $country): void
     {
         $this->country = $country;
     }
