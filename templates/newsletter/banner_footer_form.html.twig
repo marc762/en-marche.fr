@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('newsletter_subscription') }}" name="app_newsletter_banner">
+    {% include 'form_themes/app_newsletter_subscription_theme.html.twig' with { form: newsletter_form, extra_class: 'form__field--no-border' } %}
+
+    <button title="OK" type="submit" class="btn btn--no-border btn--black">OK</button>
+</form>
