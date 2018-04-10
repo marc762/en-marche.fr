@@ -105,8 +105,8 @@ class DonationRequest
     private $duration;
 
     public function __construct(
-        UuidInterface $uuid,
-        string $clientIp,
+        UuidInterface $uuid = null,
+        string $clientIp = null,
         float $amount = self::DEFAULT_AMOUNT,
         int $duration = PayboxPaymentSubscription::NONE
     ) {

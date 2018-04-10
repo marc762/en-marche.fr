@@ -59,6 +59,7 @@ class MembershipController extends Controller
             'membership' => $membership,
             'form' => $form->createView(),
             'countries' => UnitedNationsBundle::getCountries($request->getLocale()),
+            'form_type' => UserRegistrationType::class,
         ]);
     }
 
@@ -99,6 +100,7 @@ class MembershipController extends Controller
             'membership' => $membership,
             'form' => $form->createView(),
             'countries' => UnitedNationsBundle::getCountries($request->getLocale()),
+            'form_type' => AdherentRegistrationType::class,
         ]);
     }
 
@@ -135,6 +137,7 @@ class MembershipController extends Controller
             'membership' => $membership,
             'form' => $form->createView(),
             'countries' => UnitedNationsBundle::getCountries($request->getLocale()),
+            'form_type' => BecomeAdherentType::class,
         ]);
     }
 
