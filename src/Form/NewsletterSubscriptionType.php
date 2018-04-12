@@ -22,12 +22,12 @@ class NewsletterSubscriptionType extends AbstractType
                 'required' => true,
             ])
             ->add('postalCode', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'filter_emojis' => true,
             ])
             ->add('country', CountryType::class, [
                 'placeholder' => 'Choisissez un pays',
-                'required' => false,
+                'required' => true,
             ])
         ;
     }
