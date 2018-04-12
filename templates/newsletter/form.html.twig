@@ -1,5 +1,29 @@
-<form method="post" action="{{ path('newsletter_subscription') }}" name="app_newsletter_banner">
-    {% include 'form_themes/app_newsletter_subscription_theme.html.twig' with { form: newsletter_form, extra_class: 'form__field--no-border' } %}
+<form method="post" action="{{ path('newsletter_subscription') }}" class="{{ form_class }}" name="app_newsletter_subscription">
+    {{ form_widget(form.email, {
+        'attr': {
+            'aria-label': 'Entrez votre adresse email',
+            'title': 'common.email_address',
+            'placeholder': 'common.email_address',
+            'class': 'form__email ' ~ input_class
+        }
+    }) }}
+    {{ form_widget(form.postalCode, {
+        'attr': {
+            'aria-label': 'Entrez votre code postal',
+            'title': 'common.zip_code',
+            'placeholder': 'common.zip_code',
+            'class': 'form__zipcode ' ~ input_class
+        }
+    }) }}
+    {{ form_widget(form.country, {
+        'attr': {
+            'aria-label': 'Entrez votre pays',
+            'title': 'common.country',
+            'placeholder': 'common.country',
+            'class': 'form__country ' ~ input_class
+        }
+    }) }}
 
-    <button title="OK" type="submit" class="btn btn--no-border btn--black">OK</button>
+    <button title="{{ button_label }}" type="submit" class="{{ button_class }}">{{ button_label }}</button>
+    {#<button title="OK" type="submit" class="btn btn--no-border btn--black">OK</button>#}
 </form>

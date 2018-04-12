@@ -116,10 +116,14 @@ class NewsletterController extends Controller
         ]);
     }
 
-    public function renderNewsletterFormAction(): Response
+    public function renderNewsletterFormAction(array $options): Response
     {
-        return $this->render('newsletter/form.html.twig', [
+        return $this->render('newsletter/form.html.twig', array_merge([
             'newsletter_form' => $this->createForm(NewsletterSubscriptionType::class)->createView(),
-        ]);
+            'form_class' => '',
+            'input_class' => '',
+            'button_class' => '',
+            'button_label' => '',
+        ], $options));
     }
 }
