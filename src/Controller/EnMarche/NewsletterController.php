@@ -119,7 +119,9 @@ class NewsletterController extends Controller
     public function renderNewsletterFormAction(array $options): Response
     {
         return $this->render('newsletter/form.html.twig', array_merge([
-            'newsletter_form' => $this->createForm(NewsletterSubscriptionType::class)->createView(),
+            'newsletter_form' => $this->createForm(NewsletterSubscriptionType::class, null, [
+                'action' => $this->generateUrl('newsletter_subscription'),
+            ])->createView(),
             'form_class' => '',
             'input_class' => '',
             'button_class' => '',

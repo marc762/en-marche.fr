@@ -1,5 +1,5 @@
-<form method="post" action="{{ path('newsletter_subscription') }}" class="{{ form_class }}" name="app_newsletter_subscription">
-    {{ form_widget(form.email, {
+{{ form_start(newsletter_form, { attr: {class: form_class }}) }}
+    {{ form_widget(newsletter_form.email, {
         'attr': {
             'aria-label': 'Entrez votre adresse email',
             'title': 'common.email_address',
@@ -7,7 +7,7 @@
             'class': 'form__email ' ~ input_class
         }
     }) }}
-    {{ form_widget(form.postalCode, {
+    {{ form_widget(newsletter_form.postalCode, {
         'attr': {
             'aria-label': 'Entrez votre code postal',
             'title': 'common.zip_code',
@@ -15,7 +15,7 @@
             'class': 'form__zipcode ' ~ input_class
         }
     }) }}
-    {{ form_widget(form.country, {
+    {{ form_widget(newsletter_form.country, {
         'attr': {
             'aria-label': 'Entrez votre pays',
             'title': 'common.country',
@@ -25,5 +25,4 @@
     }) }}
 
     <button title="{{ button_label }}" type="submit" class="{{ button_class }}">{{ button_label }}</button>
-    {#<button title="OK" type="submit" class="btn btn--no-border btn--black">OK</button>#}
-</form>
+{{ form_end(newsletter_form) }}
