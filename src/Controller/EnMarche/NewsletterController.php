@@ -116,16 +116,10 @@ class NewsletterController extends Controller
         ]);
     }
 
-    /**
-     * @Route("/newsletter/form", defaults={"_enable_campaign_silence"=true}, name="newsletter_banner_footer_form")
-     * @Method("GET")
-     */
-    public function bannerFooterFormAction(): Response
+    public function renderNewsletterFormAction(): Response
     {
-        $form = $this->createForm(NewsletterSubscriptionType::class);
-
-        return $this->render('newsletter/banner_footer_form.html.twig', [
-            'newsletter_form' => $form->createView(),
+        return $this->render('newsletter/form.html.twig', [
+            'newsletter_form' => $this->createForm(NewsletterSubscriptionType::class)->createView(),
         ]);
     }
 }

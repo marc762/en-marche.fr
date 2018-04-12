@@ -5,7 +5,7 @@
             à <span class="text--on-white">la newsletter</span> !
         </div>
         <div class="l__row l__row--wrap">
-            {{ render(controller('AppBundle\\Controller\\EnMarche\\NewsletterController::bannerFooterFormAction')) }}
+            {{ render(controller('AppBundle\\Controller\\EnMarche\\NewsletterController::renderNewsletterFormAction')) }}
 
             <a href="javascript:void(0)" class="btn__icon btn__icon--dark newsletter__banner__btn" id="header-banner-close-btn">
                 {{ include('components/close.html.twig') }}
