@@ -1,7 +1,7 @@
 import formValidator from '../validator/formValidator';
 
 export default () => {
-    const form = dom('[name="app_donation"]');
+    const form = dom('form[name="app_donation"]');
 
-    formValidator('AppBundle\\Form\\DonationRequestType', form);
+    formValidator('donation-subscription', form);
 };

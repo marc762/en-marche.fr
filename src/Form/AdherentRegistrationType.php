@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AdherentRegistrationType extends AbstractType
+class AdherentRegistrationType extends AbstractType implements FormTypeApiExposeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -57,5 +57,10 @@ class AdherentRegistrationType extends AbstractType
     public function getParent()
     {
         return AdherentType::class;
+    }
+
+    public static function getExposeKey(): string
+    {
+        return  'adherent-registration';
     }
 }

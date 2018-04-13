@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class DonationSubscriptionRequestType extends AbstractType
+class DonationSubscriptionRequestType extends AbstractType implements FormTypeApiExposeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -16,5 +16,10 @@ class DonationSubscriptionRequestType extends AbstractType
                 'label' => 'Continuer',
             ])
         ;
+    }
+
+    public static function getExposeKey(): string
+    {
+        return 'donation-subscription';
     }
 }

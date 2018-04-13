@@ -12,7 +12,7 @@
     {% import 'javascript.js.twig' as js %}
     <script type="text/javascript">
         Kernel.onLoad(function() {
-            App.runRegistration('{{ form_type|replace({'\\': '\\\\'}) }}');
+            App.runRegistration('{{ form_type }}');
         });
     </script>
     <script src="https://www.google.com/recaptcha/api.js"></script>

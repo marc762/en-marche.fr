@@ -34,14 +34,14 @@ export default (formType, form) => {
         const url = `/api/form/validate/${formType}`;
 
         const formData = new FormData(form);
-        formData.toRemove = [];
-        formData.forEach((value, key, $this) => {
-            if (!value) {
-                $this.toRemove.push(key);
+        const toRemove = [];
+        for (const field of formData.entries()) {
+            if (!field[1]) {
+                toRemove.push(field[0]);
             }
-        });
-        for (let x = 0; x < formData.toRemove.length; x += 1) {
-            formData.delete(formData.toRemove[x]);
+        }
+        for (const fieldName of toRemove) {
+            formData.delete(fieldName);
         }
 
         reqwest({
