@@ -18,16 +18,12 @@ class NewsletterSubscriptionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class, [
-                'required' => true,
-            ])
+            ->add('email', EmailType::class)
             ->add('postalCode', TextType::class, [
-                'required' => true,
                 'filter_emojis' => true,
             ])
             ->add('country', CountryType::class, [
                 'placeholder' => 'Choisissez un pays',
-                'required' => true,
             ])
         ;
     }
