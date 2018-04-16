@@ -29,6 +29,7 @@ function displayErrors(node, id) {
 }
 
 export default (formType, form) => {
+    console.log(formType);
     formType = encodeURI(formType);
     form.addEventListener('change', () => {
         const url = `/api/form/validate/${formType}`;

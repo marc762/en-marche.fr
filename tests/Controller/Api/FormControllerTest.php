@@ -19,16 +19,21 @@ class FormControllerTest extends MysqlWebTestCase
 
     public function testValidate(): void
     {
-        $this->client->request(Request::METHOD_POST, '/api/form/validate/'.AdherentRegistrationType::getExposeKey(), [
-            'adherent_registration' => [
-                'firstName' => '123',
-                'lastName' => 't',
-                'emailAddress' => [
-                    'first' => 'toto@too.fr',
-                    'second' => 'titi',
+        $this->client->request(Request::METHOD_POST, '/api/form/validate/'.urlencode(AdherentRegistrationType::class), [
+                'adherent_registration' => [
+                    'firstName' => '123',
+                    'lastName' => 't',
+                    'emailAddress' => [
+                        'first' => 'toto@too.fr',
+                        'second' => 'titi',
+                    ],
                 ],
             ],
-        ]);
+            [],
+            [
+                'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            ]
+        );
 
         static::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         static::assertJson($this->client->getResponse()->getContent());

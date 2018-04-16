@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BecomeAdherentType extends AbstractType implements FormTypeApiExposeInterface
+class BecomeAdherentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -37,10 +37,5 @@ class BecomeAdherentType extends AbstractType implements FormTypeApiExposeInterf
     public function getParent()
     {
         return AdherentType::class;
-    }
-
-    public static function getExposeKey(): string
-    {
-        return 'become-adherent';
     }
 }

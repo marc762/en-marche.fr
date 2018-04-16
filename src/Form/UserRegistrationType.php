@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserRegistrationType extends AbstractType implements FormTypeApiExposeInterface
+class UserRegistrationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -42,10 +42,5 @@ class UserRegistrationType extends AbstractType implements FormTypeApiExposeInte
             'validation_groups' => ['Registration'],
             'country_iso' => null,
         ]);
-    }
-
-    public static function getExposeKey(): string
-    {
-        return 'user-registration';
     }
 }

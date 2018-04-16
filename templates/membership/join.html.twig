@@ -17,7 +17,7 @@
     {% import 'javascript.js.twig' as js %}
     <script type="text/javascript">
         Kernel.onLoad(function() {
-            App.runJoin('{{ form_type }}');
+            App.runJoin('{{ form.vars.form_type_class|e('js') }}');
             {{ js.address(form.address) }}
         });
     </script>
