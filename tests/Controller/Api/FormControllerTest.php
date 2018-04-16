@@ -19,7 +19,7 @@ class FormControllerTest extends MysqlWebTestCase
 
     public function testValidate(): void
     {
-        $this->client->request(Request::METHOD_POST, '/api/form/validate/'.urlencode(AdherentRegistrationType::class), [
+        $this->client->request(Request::METHOD_POST, '/api/form/validate/'.AdherentRegistrationType::getExposeKey(), [
             'adherent_registration' => [
                 'firstName' => '123',
                 'lastName' => 't',
