@@ -122,7 +122,7 @@ class NewsletterController extends Controller
             'newsletter_form' => $this->createForm(NewsletterSubscriptionType::class, null, [
                 'action' => $this->generateUrl('newsletter_subscription'),
             ])->createView(),
-            'options' => $options
+            'options' => $options,
         ]);
     }
 }
