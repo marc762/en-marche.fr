@@ -76,19 +76,16 @@ class DonationController extends Controller
             return $this->redirectToRoute('donation_index');
         }
 
-        $subscription = $request->query->getInt('abonnement', PayboxPaymentSubscription::NONE);
-
-        if (!PayboxPaymentSubscription::isValid($subscription)) {
+        if (!PayboxPaymentSubscription::isValid($request->query->getInt('abonnement', PayboxPaymentSubscription::NONE))) {
             return $this->redirectToRoute('donation_subscription', ['montant' => $amount]);
         }
 
-        $donationRequest = $this->get(DonationRequestUtils::class)
-            ->createFromRequest($request, (float) $amount, $subscription, $this->getUser())
-        ;
+        $form = $this->createForm(DonationRequestType::class, null, ['locale' => $request->getLocale()]);
 
-        $form = $this->createForm(DonationRequestType::class, $donationRequest, ['locale' => $request->getLocale()]);
+        /** @var DonationRequest $donationRequest */
+        $donationRequest = $form->handleRequest($request)->getData();
 
-        if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->get('app.donation_request.handler')->handle($donationRequest);
 
             return $this->redirectToRoute('donation_pay', [

@@ -52,9 +52,12 @@ class DonationRequestUtils
     /**
      * @throws InvalidDonationPayloadException
      */
-    public function createFromRequest(Request $request, float $amount, int $duration, ?Adherent $currentUser): DonationRequest
+    public function createFromRequest(Request $request, ?Adherent $currentUser): DonationRequest
     {
         $clientIp = $request->getClientIp();
+
+        $amount = (float) $request->query->get('montant', 0.);
+        $duration = $request->query->getInt('abonnement', PayboxPaymentSubscription::NONE);
 
         if ($currentUser) {
             $donation = DonationRequest::createFromAdherent($currentUser, $clientIp, $amount, $duration);

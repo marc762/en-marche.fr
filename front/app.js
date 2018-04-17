@@ -74,9 +74,9 @@ class App {
         });
     }
 
-    runDonationInformations() {
+    runDonationInformations(formType) {
         System.import('pages/donation_informations').catch((error) => { throw error; }).then((module) => {
-            module.default();
+            module.default(formType);
         });
     }
 
