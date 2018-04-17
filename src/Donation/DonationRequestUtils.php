@@ -7,6 +7,7 @@ use AppBundle\Entity\Donation;
 use AppBundle\Exception\InvalidDonationCallbackException;
 use AppBundle\Exception\InvalidDonationPayloadException;
 use AppBundle\Exception\InvalidDonationStatusException;
+use AppBundle\Exception\InvalidPayboxPaymentSubscriptionValueException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,9 +56,12 @@ class DonationRequestUtils
     public function createFromRequest(Request $request, ?Adherent $currentUser): DonationRequest
     {
         $clientIp = $request->getClientIp();
-
-        $amount = (float) $request->query->get('montant', 0.);
+        $amount = (float) $request->query->get('montant');
         $duration = $request->query->getInt('abonnement', PayboxPaymentSubscription::NONE);
+
+        if (!PayboxPaymentSubscription::isValid($duration)) {
+            throw new InvalidPayboxPaymentSubscriptionValueException($duration);
+        }
 
         if ($currentUser) {
             $donation = DonationRequest::createFromAdherent($currentUser, $clientIp, $amount, $duration);

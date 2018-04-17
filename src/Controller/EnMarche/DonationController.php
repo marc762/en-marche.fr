@@ -6,6 +6,7 @@ use AppBundle\Donation\DonationRequest;
 use AppBundle\Donation\DonationRequestUtils;
 use AppBundle\Donation\PayboxPaymentSubscription;
 use AppBundle\Entity\Donation;
+use AppBundle\Exception\InvalidPayboxPaymentSubscriptionValueException;
 use AppBundle\Form\DonationSubscriptionRequestType;
 use AppBundle\Form\DonationRequestType;
 use Ramsey\Uuid\Uuid;
@@ -76,14 +77,14 @@ class DonationController extends Controller
             return $this->redirectToRoute('donation_index');
         }
 
-        if (!PayboxPaymentSubscription::isValid($request->query->getInt('abonnement', PayboxPaymentSubscription::NONE))) {
-            return $this->redirectToRoute('donation_subscription', ['montant' => $amount]);
-        }
-
         $form = $this->createForm(DonationRequestType::class, null, ['locale' => $request->getLocale()]);
 
-        /** @var DonationRequest $donationRequest */
-        $donationRequest = $form->handleRequest($request)->getData();
+        try {
+            /** @var DonationRequest $donationRequest */
+            $donationRequest = $form->handleRequest($request)->getData();
+        } catch (InvalidPayboxPaymentSubscriptionValueException $e) {
+            return $this->redirectToRoute('donation_subscription', ['montant' => $amount]);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->get('app.donation_request.handler')->handle($donationRequest);
