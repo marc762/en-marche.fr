@@ -35,7 +35,7 @@ class FormControllerTest extends MysqlWebTestCase
                     'phone' => [
                         'country' => 'FR',
                         'number' => 'fail',
-                    ]
+                    ],
                 ],
             ],
             [
@@ -71,7 +71,7 @@ class FormControllerTest extends MysqlWebTestCase
                     'phone' => [
                         'country' => 'FR',
                         'number' => 'fail',
-                    ]
+                    ],
                 ],
             ],
             [
