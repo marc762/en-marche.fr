@@ -32,7 +32,7 @@ class FormController extends Controller
             throw new NoParametersExpected(sprintf('No parameters with key "%s" founded.', $form->getName()));
         }
 
-        $form->submit($params = $request->request->all()[$form->getConfig()->getName()], false)->isValid();
+        $form->submit($params = $request->request->get($form->getName()), false)->isValid();
 
         return new Response($serializer->serialize(
             $form->getErrors(true, false),
