@@ -36,8 +36,6 @@ class ReferentTagImportCommand extends Command
     {
         $output->writeln(['', 'Starting Referent Tags import.']);
 
-
-
         $this->em->beginTransaction();
 
         $this->importReferentTags($input, $output);

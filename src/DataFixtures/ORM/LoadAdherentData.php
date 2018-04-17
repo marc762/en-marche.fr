@@ -235,6 +235,7 @@ class LoadAdherentData extends AbstractFixture implements ContainerAwareInterfac
             48.112
         );
         $referentChild->enableCommitteesNotifications();
+        $referentChild->addReferentTag($this->getReference('referent_tag_77'));
 
         $coordinator = $adherentFactory->createFromArray([
             'uuid' => self::ADHERENT_15_UUID,
