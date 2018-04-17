@@ -226,7 +226,14 @@ class LoadAdherentData extends AbstractFixture implements ContainerAwareInterfac
             'phone' => '33 673654348',
             'registered_at' => '2017-01-25 19:31:45',
         ]);
-        $referentChild->setReferent(['CH', '93'], -1.6743, 48.112);
+        $referentChild->setReferent(
+            [
+                $this->getReference('referent_tag_ch'),
+                $this->getReference('referent_tag_93'),
+            ],
+            -1.6743,
+            48.112
+        );
         $referentChild->enableCommitteesNotifications();
 
         $coordinator = $adherentFactory->createFromArray([
