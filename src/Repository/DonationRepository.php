@@ -18,4 +18,11 @@ class DonationRepository extends EntityRepository
     {
         return $this->findOneByValidUuid($uuid);
     }
+
+    /**
+     * @return Donation[]
+     */
+    public function findAllSubscribedDonationByEmail(string $email): array
+    {
+    }
 }

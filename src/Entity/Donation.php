@@ -30,7 +30,7 @@ class Donation implements GeoPointInterface
     /**
      * @ORM\Column(type="smallint", options={"default": 0})
      */
-    private $duration = PayboxPaymentSubscription::NONE;
+    private $duration;
 
     /**
      * @ORM\Column(length=6)
@@ -65,7 +65,7 @@ class Donation implements GeoPointInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $finished = false;
+    private $finished;
 
     /**
      * @ORM\Column(length=50, nullable=true)
@@ -81,6 +81,13 @@ class Donation implements GeoPointInterface
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $subscriptionEndedAt;
 
     public function __construct(
         UuidInterface $uuid,
@@ -113,7 +120,7 @@ class Donation implements GeoPointInterface
         return $this->lastName.' '.$this->firstName.' ('.($this->amount / 100).' €)';
     }
 
-    public function finish(array $payboxPayload)
+    public function finish(array $payboxPayload): void
     {
         $this->finished = true;
         $this->payboxPayload = $payboxPayload;
@@ -126,6 +133,11 @@ class Donation implements GeoPointInterface
         if ('00000' === $this->payboxResultCode) {
             $this->donatedAt = new \DateTime();
         }
+    }
+
+    public function subscriptionEnded(): void
+    {
+        $this->setSubscriptionEndedAt(new \DateTime());
     }
 
     public function isFinished(): bool
@@ -242,5 +254,15 @@ class Donation implements GeoPointInterface
         }
 
         return $payload;
+    }
+
+    public function getSubscriptionEndedAt(): ?\DateTime
+    {
+        return $this->subscriptionEndedAt;
+    }
+
+    public function setSubscriptionEndedAt(?\DateTime $subscriptionEndedAt): void
+    {
+        $this->subscriptionEndedAt = $subscriptionEndedAt;
     }
 }

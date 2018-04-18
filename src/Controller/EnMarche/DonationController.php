@@ -5,13 +5,17 @@ namespace AppBundle\Controller\EnMarche;
 use AppBundle\Donation\DonationRequest;
 use AppBundle\Donation\DonationRequestUtils;
 use AppBundle\Donation\PayboxPaymentSubscription;
+use AppBundle\Donation\PayboxPaymentUnsubscription;
 use AppBundle\Entity\Donation;
+use AppBundle\Exception\PayboxPaymentUnsubscriptionException;
 use AppBundle\Form\DonationSubscriptionRequestType;
 use AppBundle\Form\DonationRequestType;
+use AppBundle\Repository\DonationRepository;
 use Ramsey\Uuid\Uuid;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -161,5 +165,41 @@ class DonationController extends Controller
             'donation' => $donation,
             'retry_url' => $retryUrl,
         ]);
+    }
+
+    /**
+     * @Route(
+     *     "/mensuel/cancel",
+     *     defaults={"_enable_campaign_silence"=true},
+     *     name="donation_subscription_cancel"
+     * )
+     * @Method("GET")
+     * // TODO: make test
+     */
+    public function cancelSubscriptionAction(Request $request, DonationRepository $donationRepository, PayboxPaymentUnsubscription $payboxPaymentUnsubscription): RedirectResponse
+    {
+        $donations = $donationRepository->findAllSubscribedDonationByEmail($this->getUser()->getEmailAddress());
+
+        foreach ($donations as $donation) {
+            try {
+                $payboxPaymentUnsubscription->unsubscribe($donation);
+                $this->getDoctrine()->getManager()->flush();
+                $payboxPaymentUnsubscription->sendConfirmationMessage($donation, $this->getUser());
+                $this->addFlash('success', sprintf(
+                    'Le don mensuel crée le %s pour un mantant mensuel de %d a été correctement annulé.',
+                    $donation->getCreatedAt()->format('Y/m/d'),
+                    $donation->getAmount()
+                ));
+            } catch (PayboxPaymentUnsubscriptionException $payboxPaymentUnsubscriptionException) {
+                $this->addFlash('danger', sprintf(
+                    'Le don mensuel crée le %s pour un mantant mensuel de %d n\'a pas pu être annulé. Erreur: %s',
+                    $donation->getCreatedAt()->format('Y/m/d'),
+                    $donation->getAmount(),
+                    $payboxPaymentUnsubscriptionException->getMessage()
+                ));
+            }
+        }
+
+        return $this->redirect($request->headers->get('referer') ?? $this->generateUrl('homepage'));
     }
 }
