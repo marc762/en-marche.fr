@@ -1,0 +1,14 @@
+{% block app_admin_adherent_tel_widget %}
+    {{ block('phone_widget') }}
+{% endblock %}
+
+{% block phone_widget %}
+    {% if widget is constant('Misd\\PhoneNumberBundle\\Form\\Type\\PhoneNumberType::WIDGET_COUNTRY_CHOICE') %}
+        <div {{ block('widget_container_attributes') }}>
+            {{- form_widget(form.country) -}}
+            {{- form_widget(form.number) -}}
+        </div>
+    {% else -%}
+        {{- block('form_widget_simple') -}}
+    {%- endif %}
+{% endblock %}

@@ -80,6 +80,7 @@ twig:
         url_help_en_marche:     "https://aide.en-marche.fr"
         project_dir:            "%kernel.project_dir%"
     form_themes:
+        - 'form_fix_phone_template.html.twig'
         - 'form_theme.html.twig'
         - 'SonataCoreBundle:Form:datepicker.html.twig'
         - 'SonataCoreBundle:Form:colorpicker.html.twig'
